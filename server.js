@@ -66,16 +66,16 @@ client.on('message', async (topic, message) => {
 
           // Extract relevant data from the nested objects
             const deviceName = data.info.device_name;
-            const firmVer = data.info.firm_ver; // Likely commented out
-            const kodeKebun = data.info.kode_kebun;
+            // const firmVer = data.info.firm_ver; // Likely commented out
+            // const kodeKebun = data.info.kode_kebun;
             const wifiName = data.info.wifi_name;
-            const wifiPass = data.info.wifi_pass; // Likely commented out
+            // const wifiPass = data.info.wifi_pass; // Likely commented out
             const wifiSignal = data.info.wifi_signal;
-            const ip = data.info.ip;
-            const mac = data.info.mac;
-            const gmt = data.info.gmt;
-            const date = data.info.date;
-            const time = data.info.time;
+            // const ip = data.info.ip;
+            // const mac = data.info.mac;
+            // const gmt = data.info.gmt;
+            // const date = data.info.date;
+            // const time = data.info.time;
             const volume = data.sensor.volume;
             const flowrate = data.sensor.flowRate;
             const timestamp = data.sensor.timestamp;
@@ -83,16 +83,16 @@ client.on('message', async (topic, message) => {
           // Create a new FlowtrackData document with relevant data
             const flowData = new FlowtrackData({
                 deviceName,
-                firmVer, // Likely commented out
-                kodeKebun,
+                // firmVer, // Likely commented out
+                // kodeKebun,
                 wifiName,
-                wifiPass, // Likely commented out
+                // wifiPass, // Likely commented out
                 wifiSignal,
-                ip,
-                mac,
-                gmt,
-                date,
-                time,
+                // ip,
+                // mac,
+                // gmt,
+                // date,
+                // time,
                 volume,
                 flowrate,
                 timestamp,
