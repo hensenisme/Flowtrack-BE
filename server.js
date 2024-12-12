@@ -51,16 +51,53 @@ client.on('message', async (topic, message) => {
         const deviceId = match[2];
 
         try {
-            // Parse the JSON message
-            const data = JSON.parse(message.toString());
-            const { flowrate, volume } = data;
+            // // Parse the JSON message
+            // const data = JSON.parse(message.toString());
+            // const { flowrate, volume } = data;
 
-            // Create new FlowtrackData document
+            // // Create new FlowtrackData document
+            // const flowData = new FlowtrackData({
+            //     flowrate,
+            //     volume,
+            //     device: deviceId, // Link data to the correct device
+            // });
+
+            const data = JSON.parse(message.toString());
+
+          // Extract relevant data from the nested objects
+            const deviceName = data.info.device_name;
+            const firmVer = data.info.firm_ver; // Likely commented out
+            const kodeKebun = data.info.kode_kebun;
+            const wifiName = data.info.wifi_name;
+            const wifiPass = data.info.wifi_pass; // Likely commented out
+            const wifiSignal = data.info.wifi_signal;
+            const ip = data.info.ip;
+            const mac = data.info.mac;
+            const gmt = data.info.gmt;
+            const date = data.info.date;
+            const time = data.info.time;
+            const volume = data.sensor.volume;
+            const flowrate = data.sensor.flowRate;
+            const timestamp = data.sensor.timestamp;
+        
+          // Create a new FlowtrackData document with relevant data
             const flowData = new FlowtrackData({
-                flowrate,
+                deviceName,
+                firmVer, // Likely commented out
+                kodeKebun,
+                wifiName,
+                wifiPass, // Likely commented out
+                wifiSignal,
+                ip,
+                mac,
+                gmt,
+                date,
+                time,
                 volume,
+                flowrate,
+                timestamp,
                 device: deviceId, // Link data to the correct device
-            });
+              });
 
             await flowData.save();
             console.log(`Data saved to MongoDB for device ${deviceId} in kebun ${kebunId}:`, data);
