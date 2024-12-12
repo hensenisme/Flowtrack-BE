@@ -26,7 +26,7 @@ app.use('/api/devices', deviceRoutes);
 app.use('/api/kebuns', kebunRoutes);
 
 // MQTT Setup
-const brokerUrl = 'mqtt://192.168.1.55'; // IP server MQTT
+const brokerUrl = process.env.MQTT_BROKER_URL;
 const client = mqtt.connect(brokerUrl);
 
 // Format topik: kebun/{kebunId}/device/{deviceId}/data
