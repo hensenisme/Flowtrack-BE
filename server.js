@@ -29,26 +29,26 @@ app.use('/api/kebuns', kebunRoutes);
 const brokerUrl = process.env.MQTT_BROKER_URL;
 const client = mqtt.connect(brokerUrl);
 
-// Format topik: kebun/{kebunId}/device/{deviceId}/data
+// Format topik
 client.on('connect', () => {
     console.log('Connected to MQTT broker');
-    client.subscribe('kebun/+/device/+/data', (err) => {
+    client.subscribe('main/status/flowtrack/+', (err) => {
         if (err) {
             console.error('Failed to subscribe to topic:', err);
         } else {
-            console.log('Subscribed to topic pattern: kebun/+/device/+/data');
+            console.log('Subscribed to topic pattern: main/status/flowtrack/+');
         }
     });
 });
 
 client.on('message', async (topic, message) => {
-    // Extract kebunId and deviceId from the topic using regex
-    const topicRegex = /^kebun\/(\w+)\/device\/(\w+)\/data$/;
+    // Update regex for new topic structure
+    const topicRegex = /^main\/status\/flowtrack\/(\w+)$/;
     const match = topic.match(topicRegex);
 
     if (match) {
-        const kebunId = match[1];
-        const deviceId = match[2];
+        // const kebunId = match[1];
+        const deviceId = match[1];
 
         try {
             // // Parse the JSON message
@@ -100,8 +100,8 @@ client.on('message', async (topic, message) => {
               });
 
             await flowData.save();
-            console.log(`Data saved to MongoDB for device ${deviceId} in kebun ${kebunId}:`, data);
-        } catch (err) {
+            console.log(`Data saved to MongoDB for device ${deviceId}:`, data);
+          } catch (err) {
             console.error('Failed to save data to MongoDB:', err);
         }
     } else {
